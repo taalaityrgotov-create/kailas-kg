@@ -1,0 +1,100 @@
+/* Каталог товаров. Цены — в сомах (KGS).
+   Позже этот файл можно заменить загрузкой из админки / базы данных.
+   Поле `img` — путь к фото товара (например 'img/products/fuga-du-2.jpg').
+   Пока фото нет, сайт рисует аккуратную иллюстрацию по категории. */
+const CURRENCIES = {
+  KGS: { symbol: 'сом', rate: 1, pos: 'after' },
+  USD: { symbol: '$', rate: 1 / 87.4, pos: 'before' },
+  RUB: { symbol: '₽', rate: 1 / 1.08, pos: 'after' },
+  KZT: { symbol: '₸', rate: 1 / 0.175, pos: 'after' }
+};
+
+const PRODUCTS = [
+  { id: 'fuga-du-2-boa', name: 'Kailas FUGA DU 2 BOA® Кроссовки для трейлраннинга мужские', cat: 'footwear', gender: 'men', act: ['running'], price: 21800, rating: 4.8, reviews: 112, isNew: true, best: true, tag: 'BOA® Fit System',
+    colors: [{ n: 'Чёрный/лайм', c: '#1b1d1c', a: '#c4f02b' }, { n: 'Белый/синий', c: '#e9ecef', a: '#2a5bd7' }], sizes: ['40', '41', '42', '43', '44', '45'],
+    desc: 'Флагманская модель для длинных горных забегов. Двойная система шнуровки BOA® точно фиксирует стопу на спусках, а промежуточная подошва с пеной высокой отдачи сохраняет энергию на подъёмах.',
+    feat: ['Система BOA® Li2 с двумя зонами регулировки', 'Подошва с протектором 5 мм для грязи и осыпей', 'Перепад 6 мм, вес 310 г (42 р-р)', 'Защитный носок от камней'] },
+  { id: 'fuga-ex-pro', name: 'Kailas FUGA EX PRO Кроссовки для трейлраннинга унисекс', cat: 'footwear', gender: 'unisex', act: ['running'], price: 26200, rating: 4.9, reviews: 38, best: true, tag: 'VIBRAM®',
+    colors: [{ n: 'Оранжевый', c: '#f05a1a', a: '#111' }, { n: 'Чёрный', c: '#151515', a: '#f05a1a' }], sizes: ['38', '39', '40', '41', '42', '43', '44', '45'],
+    desc: 'Карбоновая пластина и подошва Vibram® Megagrip для максимальной скорости на технических трассах.',
+    feat: ['Карбоновая пластина', 'Vibram® Megagrip', 'Дышащий верх из инженерной сетки', 'Вес 285 г'] },
+  { id: 'fuga-ex-3', name: 'Kailas FUGA EX 3 Кроссовки для трейлраннинга мужские', cat: 'footwear', gender: 'men', act: ['running', 'hiking'], price: 15600, rating: 4.7, reviews: 48, isNew: true, best: true,
+    colors: [{ n: 'Серый/оранжевый', c: '#6b7075', a: '#ff7a1a' }, { n: 'Синий', c: '#1f3f8f', a: '#9fd3ff' }], sizes: ['40', '41', '42', '43', '44', '45', '46'],
+    desc: 'Универсальная модель для тренировок и забегов до 50 км. Амортизация, сцепление и защита в сбалансированном пакете.',
+    feat: ['Амортизирующая пена FLYTE', 'Протектор 4,5 мм', 'Перепад 8 мм'] },
+  { id: 'fuga-ex-3-w', name: 'Kailas FUGA EX 3 Кроссовки для трейлраннинга женские', cat: 'footwear', gender: 'women', act: ['running'], price: 15600, rating: 4.8, reviews: 31, best: true,
+    colors: [{ n: 'Мятный', c: '#7fd6c2', a: '#1e2f2b' }, { n: 'Фиолетовый', c: '#7a5bd1', a: '#ffd166' }], sizes: ['36', '37', '38', '39', '40', '41'],
+    desc: 'Женская колодка, мягкая посадка в пятке и цепкая подошва для горных тропинок.', feat: ['Женская колодка', 'Протектор 4,5 мм', 'Вес 240 г'] },
+  { id: 'yan-gtx-boa', name: 'Kailas YAN GTX BOA Ботинки треккинговые водонепроницаемые мужские', cat: 'footwear', gender: 'men', act: ['hiking', 'alpine'], price: 34000, rating: 4.8, reviews: 23, tag: 'GORE-TEX®',
+    colors: [{ n: 'Коричневый', c: '#6b4a2f', a: '#e0b04a' }, { n: 'Чёрный', c: '#1a1a1a', a: '#888' }], sizes: ['40', '41', '42', '43', '44', '45', '46'],
+    desc: 'Высокие треккинговые ботинки с мембраной GORE-TEX® и подошвой Vibram® для многодневных переходов по Тянь-Шаню.',
+    feat: ['Мембрана GORE-TEX®', 'Подошва Vibram®', 'Шнуровка BOA®', 'Усиленный рант'] },
+  { id: 'mountain-wander-3-w', name: 'Kailas Mountain Wander 3 GTX Ботинки для хайкинга женские', cat: 'footwear', gender: 'women', act: ['hiking', 'urban'], price: 17000, rating: 4.6, reviews: 9, isNew: true, tag: 'GORE-TEX®',
+    colors: [{ n: 'Бежевый', c: '#c9b89a', a: '#5b4a3a' }], sizes: ['36', '37', '38', '39', '40', '41'],
+    desc: 'Лёгкие водонепроницаемые ботинки для прогулок в горах и в городе.', feat: ['GORE-TEX®', 'Вес 390 г', 'Мягкая стелька Ortholite®'] },
+
+  { id: '5000gt-down', name: 'Kailas 5000GT Alpine 1000FP Пуховик с капюшоном унисекс', cat: 'jackets', gender: 'unisex', act: ['alpine', 'skiing'], price: 50700, rating: 5.0, reviews: 6, isNew: true, best: true, tag: '1000 FP',
+    colors: [{ n: 'Красный', c: '#c8102e', a: '#1a1a1a' }, { n: 'Жёлтый', c: '#f5c400', a: '#1a1a1a' }], sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    desc: 'Экспедиционный пуховик для восхождений выше 5000 метров. Гусиный пух 1000 FP, ветрозащитная ткань и анатомический капюшон под каску.',
+    feat: ['Гусиный пух 1000 FP', 'Капюшон под каску', 'Комфорт до −30 °C', 'Упаковывается в собственный карман'] },
+  { id: 'mont-x-pro', name: 'Kailas MONT-X PRO GTX Мембранная куртка унисекс', cat: 'jackets', gender: 'unisex', act: ['alpine', 'hiking', 'skiing'], price: 45400, rating: 4.9, reviews: 4, best: true, tag: 'GORE-TEX®',
+    colors: [{ n: 'Синий', c: '#1d4ed8', a: '#0b1a3a' }, { n: 'Чёрный', c: '#141414', a: '#3a3a3a' }], sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    desc: 'Трёхслойная мембранная куртка GORE-TEX® Pro для самых суровых условий. Полностью проклеенные швы и вентиляция под мышками.',
+    feat: ['3L GORE-TEX® Pro', 'Водонепроницаемость 28 000 мм', 'Вентиляционные молнии', 'Капюшон под каску'] },
+  { id: 'bogda-lt-w', name: 'Kailas Bogda LT Мембранная куртка женская', cat: 'jackets', gender: 'women', act: ['hiking', 'urban'], price: 26200, rating: 4.7, reviews: 12, isNew: true,
+    colors: [{ n: 'Пыльная роза', c: '#d48a8a', a: '#4a2a2a' }, { n: 'Тёмно-зелёный', c: '#2f4a3a', a: '#9fc5a8' }], sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    desc: 'Лёгкая 2,5-слойная куртка для походов и города. Складывается в компактный чехол.', feat: ['Вес 280 г', 'Водонепроницаемость 20 000 мм', 'Регулируемый капюшон'] },
+  { id: 'm8-pro-softshell', name: 'Kailas M8-PRO Софтшелл куртка с капюшоном мужская', cat: 'jackets', gender: 'men', act: ['alpine', 'climbing'], price: 26200, rating: 4.8, reviews: 15, isNew: true,
+    colors: [{ n: 'Оливковый', c: '#55613b', a: '#c8d18f' }, { n: 'Графит', c: '#2b2e33', a: '#7d8590' }], sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    desc: 'Эластичный софтшелл для активного движения: защищает от ветра и лёгкого дождя, отлично дышит.', feat: ['4-сторонний стретч', 'Водоотталкивающая пропитка DWR', 'Капюшон под каску'] },
+  { id: 'fuga-ar-fleece', name: 'Kailas FUGA AR Флисовая куртка с капюшоном мужская', cat: 'tops', gender: 'men', act: ['running', 'hiking'], price: 23600, rating: 4.6, reviews: 7, isNew: true,
+    colors: [{ n: 'Серый меланж', c: '#8a8f96', a: '#d6d9dd' }, { n: 'Тёмно-синий', c: '#1c2742', a: '#5b7bd5' }], sizes: ['S', 'M', 'L', 'XL'],
+    desc: 'Тёплый и дышащий флис Polartec® для холодных тренировок.', feat: ['Polartec® Power Grid', 'Плоские швы', 'Большие карманы на молнии'] },
+  { id: 'fuga-ls-tee', name: 'Kailas FUGA Функциональная футболка с длинным рукавом мужская', cat: 'tops', gender: 'men', act: ['running'], price: 11400, rating: 4.5, reviews: 11,
+    colors: [{ n: 'Чёрный', c: '#151515', a: '#c4f02b' }, { n: 'Белый', c: '#f2f2f2', a: '#151515' }], sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    desc: 'Быстросохнущая футболка с антибактериальной обработкой.', feat: ['COOLMAX®', 'Светоотражающие элементы', 'Вес 140 г'] },
+  { id: 'trail-tee-w', name: 'Kailas Трейловая футболка женская', cat: 'tops', gender: 'women', act: ['running', 'hiking'], price: 6100, rating: 4.7, reviews: 19, best: true,
+    colors: [{ n: 'Коралловый', c: '#ff6f61', a: '#fff' }, { n: 'Бирюзовый', c: '#2ab7a9', a: '#fff' }], sizes: ['XS', 'S', 'M', 'L'],
+    desc: 'Лёгкая дышащая футболка для бега и походов в жару.', feat: ['Защита UPF 50+', 'Быстрое высыхание'] },
+  { id: '9a-climbing-pants', name: 'Kailas 9a Зауженные брюки для скалолазания мужские', cat: 'pants', gender: 'men', act: ['climbing', 'urban'], price: 11400, rating: 4.8, reviews: 22, best: true,
+    colors: [{ n: 'Песочный', c: '#c2a878', a: '#5b4a2f' }, { n: 'Чёрный', c: '#1a1a1a', a: '#555' }], sizes: ['S', 'M', 'L', 'XL'],
+    desc: 'Прочные эластичные брюки с ластовицей для свободы движений на скале.', feat: ['Ластовица', 'Петля для мешочка с магнезией', 'Регулируемые манжеты'] },
+  { id: 't10-pro-pants', name: 'Kailas T10-PRO CORDURA® Софтшелл брюки мужские', cat: 'pants', gender: 'men', act: ['alpine', 'hiking'], price: 24000, rating: 4.7, reviews: 8, isNew: true, tag: 'CORDURA®',
+    colors: [{ n: 'Графит', c: '#2b2e33', a: '#e7e7e7' }], sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    desc: 'Износостойкие брюки с накладками CORDURA® в зонах трения — для альпинизма и треккинга.', feat: ['Накладки CORDURA®', 'Защита от кошек', 'Вентиляционные молнии'] },
+  { id: 'hiking-pants-w', name: 'Kailas Трекинговые брюки женские', cat: 'pants', gender: 'women', act: ['hiking'], price: 9600, rating: 4.6, reviews: 27,
+    colors: [{ n: 'Хаки', c: '#7a7a52', a: '#d8d8b0' }, { n: 'Чёрный', c: '#1a1a1a', a: '#666' }], sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    desc: 'Лёгкие эластичные брюки для летних походов.', feat: ['UPF 50+', 'Быстросохнущая ткань', 'Карман на молнии'] },
+
+  { id: 'fuga-air-8', name: 'Kailas FUGA Air 8 IV Беговой жилет-рюкзак 8 л унисекс', cat: 'packs', gender: 'unisex', act: ['running'], price: 13900, rating: 4.8, reviews: 64, best: true,
+    colors: [{ n: 'Чёрный', c: '#151515', a: '#c4f02b' }, { n: 'Белый', c: '#ececec', a: '#f05a1a' }], sizes: ['S', 'M', 'L'],
+    desc: 'Жилет для ультрамарафонов: две мягкие фляги 500 мл в комплекте, место для обязательного снаряжения.', feat: ['Объём 8 л', '2 фляги 500 мл', 'Вес 190 г'] },
+  { id: 'alpine-pack-45', name: 'Kailas Alpine 45 Рюкзак для альпинизма', cat: 'packs', gender: 'unisex', act: ['alpine', 'skiing'], price: 18300, rating: 4.9, reviews: 14,
+    colors: [{ n: 'Оранжевый', c: '#f05a1a', a: '#1a1a1a' }, { n: 'Серый', c: '#6b7075', a: '#1a1a1a' }], sizes: ['One size'],
+    desc: 'Лёгкий технический рюкзак с креплениями для ледорубов, кошек и лыж.', feat: ['Объём 45 л', 'Крепление для 2 ледорубов', 'Вес 1,1 кг'] },
+  { id: 'fuga-vita-waist', name: 'Kailas FUGA VITA Беговая поясная сумка унисекс', cat: 'packs', gender: 'unisex', act: ['running', 'urban'], price: 4100, rating: 4.5, reviews: 3, isNew: true,
+    colors: [{ n: 'Чёрный', c: '#151515', a: '#c4f02b' }], sizes: ['One size'], desc: 'Поясная сумка без подпрыгивания для телефона и геля.', feat: ['Эластичный пояс', 'Светоотражающий логотип'] },
+
+  { id: 'clip-up-iv', name: 'KAILAS Clip-up IV Телескопическая палка-клипса для оттяжек', cat: 'climbing', gender: 'unisex', act: ['climbing'], price: 6300, rating: 4.7, reviews: 20, best: true,
+    colors: [{ n: 'Красный', c: '#c8102e', a: '#cfcfcf' }], sizes: ['One size'], desc: 'Позволяет безопасно прощёлкнуть первую оттяжку с земли.', feat: ['Длина 0,7–3,6 м', 'Сверхлёгкий алюминий'] },
+  { id: 'route-setter-bag', name: 'Kailas Сумка постановщика трасс с поясом', cat: 'climbing', gender: 'unisex', act: ['climbing'], price: 4900, rating: 4.6, reviews: 25,
+    colors: [{ n: 'Жёлтый', c: '#f5c400', a: '#1a1a1a' }, { n: 'Синий', c: '#1d4ed8', a: '#fff' }], sizes: ['One size'], desc: 'Прочная ПВХ-сумка для зацепок и инструментов.', feat: ['Регулируемый пояс', 'Карманы для инструментов'] },
+  { id: 'harness-air', name: 'Kailas Airo Страховочная система', cat: 'climbing', gender: 'unisex', act: ['climbing', 'alpine'], price: 7400, rating: 4.8, reviews: 33,
+    colors: [{ n: 'Чёрный/красный', c: '#1a1a1a', a: '#c8102e' }], sizes: ['S', 'M', 'L'], desc: 'Лёгкая и комфортная обвязка для скалодрома и скал.', feat: ['Вес 340 г', '4 петли для снаряжения', 'Сертификат CE/UIAA'] },
+
+  { id: 'fuga-gloves', name: 'Kailas FUGA Беговые перчатки унисекс', cat: 'accessories', gender: 'unisex', act: ['running'], price: 2900, rating: 4.4, reviews: 5, isNew: true,
+    colors: [{ n: 'Чёрный', c: '#151515', a: '#c4f02b' }], sizes: ['S', 'M', 'L'], desc: 'Тонкие перчатки с поддержкой сенсорных экранов.', feat: ['Touch-screen', 'Силиконовые накладки'] },
+  { id: 'ski-beanie', name: 'Kailas Тёплая вязаная шапка унисекс', cat: 'accessories', gender: 'unisex', act: ['skiing', 'urban'], price: 3100, rating: 4.9, reviews: 14, isNew: true,
+    colors: [{ n: 'Оранжевый', c: '#f05a1a', a: '#fff' }, { n: 'Серый', c: '#8a8f96', a: '#fff' }], sizes: ['One size'], desc: 'Мягкая шерстяная шапка для холодных дней.', feat: ['Шерсть мериноса', 'Флисовая подкладка'] },
+  { id: 'fuga-socks', name: 'Kailas FUGA Беговые носки средней высоты унисекс', cat: 'accessories', gender: 'unisex', act: ['running', 'hiking'], price: 1400, rating: 4.7, reviews: 6, best: true, tag: 'COOLMAX®',
+    colors: [{ n: 'Белый', c: '#f2f2f2', a: '#151515' }, { n: 'Чёрный', c: '#151515', a: '#c4f02b' }], sizes: ['S', 'M', 'L'], desc: 'Бесшовные носки с анатомической поддержкой свода.', feat: ['COOLMAX®', 'Анатомические левый/правый'] },
+  { id: 'fuga-cap', name: 'Kailas FUGA Беговая кепка', cat: 'accessories', gender: 'unisex', act: ['running', 'hiking'], price: 3900, rating: 4.6, reviews: 21, soldOut: true,
+    colors: [{ n: 'Белый', c: '#f2f2f2', a: '#151515' }], sizes: ['One size'], desc: 'Лёгкая кепка с сеткой для вентиляции.', feat: ['Вес 50 г', 'Складной козырёк'] }
+];
+
+const STORIES = [
+  { title: 'Кроссовки для хайкинга или трейлраннинга: что выбрать?', date: '20 марта 2026', img: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=70' },
+  { title: 'Пик Ленина с Kailas: как мы готовили экспедицию', date: '12 августа 2026', img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=70' },
+  { title: 'Обязательное снаряжение для горного забега', date: '27 июля 2026', img: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=800&q=70' },
+  { title: 'Гид по многослойности: принцип трёх слоёв', date: '2 июня 2026', img: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=70' }
+];

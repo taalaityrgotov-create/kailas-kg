@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KAILAS Кыргызстан | Made to Climb — горная одежда и снаряжение</title>
+  <meta name="description" content="Официальный интернет-магазин KAILAS в Кыргызстане: одежда, обувь и снаряжение для альпинизма, трейлраннинга, хайкинга и скалолазания. Доставка по КР и по всему миру.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=3">
+</head>
+<body>
+  <div class="topbar" data-i18n="topbar"></div>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="icon-btn burger" id="burger" aria-label="Меню">
+          <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <nav class="nav" id="nav"></nav>
+      </div>
+      <a href="#/" class="logo" aria-label="KAILAS">
+        <svg viewBox="0 0 60 40"><path d="M2 38 L22 8 L30 20 L38 10 L58 38 Z" fill="#fff"/><path d="M22 8 L26 14 L18 14 Z M38 10 L41 15 L35 15 Z" fill="#0d0d0d"/></svg>
+        <span>KAILAS</span>
+        <small>KYRGYZSTAN</small>
+      </a>
+      <div class="header-tools">
+        <select class="select-mini" id="langSel" aria-label="Язык"></select>
+        <select class="select-mini" id="curSel" aria-label="Валюта"></select>
+        <button class="icon-btn" id="searchBtn" aria-label="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+        <a class="icon-btn" href="#/contacts" aria-label="Аккаунт"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></a>
+        <button class="icon-btn" id="cartBtn" aria-label="Корзина"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><span class="badge hidden" id="cartCount">0</span></button>
+      </div>
+    </div>
+    <div class="searchbar hidden" id="searchBar">
+      <div class="wrap"><input type="search" id="searchInput" data-i18n-ph="search_ph"></div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu"><div class="panel" id="mobilePanel"></div></div>
+
+  <main id="app"></main>
+
+  <section class="newsletter">
+    <div class="wrap">
+      <div>
+        <h3 data-i18n="newsletter"></h3>
+        <p style="color:var(--muted)" data-i18n="newsletter_t"></p>
+      </div>
+      <form id="newsForm">
+        <input type="email" required data-i18n-ph="email_ph">
+        <button class="btn btn-dark" data-i18n="subscribe"></button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a href="#/" class="logo" style="align-items:flex-start;color:#fff"><span style="padding:0">KAILAS</span><small style="padding:0">KYRGYZSTAN</small></a>
+          <p style="margin-top:16px;max-width:300px">Горная одежда, обувь и снаряжение KAILAS — для восхождений, трейлраннинга и путешествий по Тянь-Шаню и всему миру.</p>
+          <div class="socials">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8.2a3.2 3.2 0 110-6.4 3.2 3.2 0 010 6.4zM17.3 5.5a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4zM12 2c-2.7 0-3 0-4.1.1C4.3 2.3 2.3 4.3 2.1 7.9 2 9 2 9.3 2 12s0 3 .1 4.1c.2 3.6 2.2 5.6 5.8 5.8 1.1.1 1.4.1 4.1.1s3 0 4.1-.1c3.6-.2 5.6-2.2 5.8-5.8.1-1.1.1-1.4.1-4.1s0-3-.1-4.1c-.2-3.6-2.2-5.6-5.8-5.8C15 2 14.7 2 12 2zm0 1.8c2.7 0 3 0 4 .1 2.7.1 4 1.4 4.1 4.1.1 1 .1 1.3.1 4s0 3-.1 4c-.1 2.7-1.4 4-4.1 4.1-1 .1-1.3.1-4 .1s-3 0-4-.1c-2.7-.1-4-1.4-4.1-4.1-.1-1-.1-1.3-.1-4s0-3 .1-4C4 5.3 5.3 4 8 3.9c1-.1 1.3-.1 4-.1z"/></svg></a>
+            <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21.9 4.3l-3.2 15c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2l-11 6.9-4.7-1.5c-1-.3-1-1 .2-1.5l18.4-7.1c.9-.3 1.6.2 1.5 1.3z"/></svg></a>
+            <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 01-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 00-.7.3 3 3 0 00-.9 2.2 5.2 5.2 0 001.1 2.8 11.9 11.9 0 004.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <h6 data-i18n="footer_shop"></h6>
+          <ul>
+            <li><a href="#/shop?gender=men" data-i18n="nav_men"></a></li>
+            <li><a href="#/shop?gender=women" data-i18n="nav_women"></a></li>
+            <li><a href="#/shop?cat=footwear" data-i18n="nav_footwear"></a></li>
+            <li><a href="#/shop?group=equipment" data-i18n="nav_equipment"></a></li>
+            <li><a href="#/shop?sort=new" data-i18n="nav_new"></a></li>
+          </ul>
+        </div>
+        <div>
+          <h6 data-i18n="footer_help"></h6>
+          <ul>
+            <li><a href="#/delivery" data-i18n="delivery"></a></li>
+            <li><a href="#/returns" data-i18n="returns"></a></li>
+            <li><a href="#/sizes" data-i18n="size_guide"></a></li>
+            <li><a href="#/faq" data-i18n="faq"></a></li>
+          </ul>
+        </div>
+        <div>
+          <h6 data-i18n="footer_company"></h6>
+          <ul>
+            <li><a href="#/about" data-i18n="about"></a></li>
+            <li><a href="#/contacts" data-i18n="contacts"></a></li>
+            <li><a href="#/contacts" data-i18n="stores"></a></li>
+          </ul>
+          <div class="pay-icons"><span>VISA</span><span>Mastercard</span><span>Элкарт</span><span>MBank</span><span>O!Деньги</span></div>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© <span id="year"></span> KAILAS Кыргызстан. <span data-i18n="rights"></span></span>
+        <span>г. Бишкек, Кыргызская Республика</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Корзина">
+    <div class="drawer-head">
+      <h3 data-i18n="cart_title"></h3>
+      <button class="icon-btn" id="closeCart" aria-label="Закрыть" style="color:#000"><svg viewBox="0 0 24 24" style="stroke:#000"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div id="drawerContent" style="display:flex;flex-direction:column;flex:1;min-height:0"></div>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/app.js?v=3"></script>
+</body>
+</html>
